@@ -71,82 +71,37 @@
 </div>
 
 
-
-
 <div class="container py-5">
-  <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4">
+  
+     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4" id="carsContainer"></div>
 
-   
-    <div class="col">
-      <div class="card car-card h-100" dir="rtl">
-        <img src="assets/jpgs/corollacross.jpg" class="card-img-top" alt="Toyota Corolla">
-        <div class="card-body">
-          <h5 class="card-title">טויטה קורולה</h5>
-          <ul class="card-details">
-            <li>שנה: 2024</li>
-            <li>ק"מ: 15,000</li>
-            <li>מחיר: 105900 ₪ </li>
-          </ul>
-          <a href="#" class="btn btn-primary w-100">ראה עוד פרטים</a>
-        </div>
-      </div>
-    </div>
-
-    
-    <div class="col">
-      <div class="card car-card h-100" dir="rtl">
-        <img src="assets/jpgs/mazda2.jpeg" class="card-img-top" alt="Honda Civic">
-        <div class="card-body">
-          <h5 class="card-title">מאזדה 2</h5>
-          <ul class="card-details">
-            <li>Year: 2020</li>
-            <li>Mileage: 22,000 km</li>
-            <li>Price: $19,500</li>
-          </ul>
-          <a href="#" class="btn btn-primary w-100">ראה עוד פרטים</a>
-        </div>
-      </div>
-    </div>
-
-    <!-- Card 3 -->
-    <div class="col">
-      <div class="card car-card h-100" dir="rtl">
-        <img src="assets/jpgs/ignis.jpg" class="card-img-top" alt="Ford Mustang">
-        <div class="card-body">
-          <h5 class="card-title">סוזוקי איגניס</h5>
-          <ul class="card-details">
-            <li>Year: 2019</li>
-            <li>Mileage: 30,000 km</li>
-            <li>Price: $25,000</li>
-          </ul>
-          <a href="#" class="btn btn-primary w-100">ראה עוד פרטים</a>
-        </div>
-      </div>
-    </div>
-
-        <!-- Card 4 -->
-    <div class="col">
-      <div class="card car-card h-100" dir="rtl">
-        <img src="https://via.placeholder.com/400x200?text=Ford+Mustang" class="card-img-top" alt="Ford Mustang">
-        <div class="card-body">
-          <h5 class="card-title">Ford Mustang</h5>
-          <ul class="card-details">
-            <li>Year: 2019</li>
-            <li>Mileage: 30,000 km</li>
-            <li>Price: $25,000</li>
-          </ul>
-          <a href="#" class="btn btn-primary w-100">ראה עוד פרטים</a>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
 </div>
 
-<div class="container-fluid" style="background-image:url('assets/jpgs/carkeys.png');background-size: cover;"">
+<div class="container-fluid" style="background-image:url('assets/jpgs/carkeys.png');background-size: cover;">
   <center>
-  <br>
-  <style>
+
+<div class="container my-4">
+  <div class="row g-4">    
+    <div class="col-md-6">
+      <div class="image-card" style="background-image: url('assets/jpgs/cor.jpg');">
+        <div class="image-overlay">
+          <h3>ייעוץ בתהליך הרכישה</h3>
+          <p>אנו נייעץ לכם איזה בחירה היא הטובה ביותר עבורכם, אם זה רכב קטן או משפחתי </p>
+        </div>
+      </div>
+</div>
+
+<div class="col-md-6">
+      <div class="image-card" style="background-image: url('assets/jpgs/t2.jpg');">
+        <div class="image-overlay">
+          <h3>ליווי עד הרכב הנכון</h3>
+          <p>נהיה אתכם עד הרגע שתמצאו את מה שתם מחפשים</p>
+        </div>
+      </div>
+</div>
+  </center>
+
+<style>
     .image-card {
       position: relative;
       overflow: hidden;
@@ -164,33 +119,14 @@
       width: 100%;
       padding: 1rem;
     }
-  </style>
+</style>
 
-<div class="container my-4">
-  <div class="row g-4">    
-    <!-- Card 1 -->
-    <div class="col-md-6">
-      <div class="image-card" style="background-image: url('assets/jpgs/cor.jpg');">
-        <div class="image-overlay">
-          <h3>ייעוץ בתהליך הרכישה</h3>
-          <p>אנו נייעץ לכם איזה בחירה היא הטובה ביותר עבורכם, אם זה רכב קטן או משפחתי </p>
-        </div>
-      </div>
-    </div>
-
-    <!-- Card 2 -->
-    <div class="col-md-6">
-      <div class="image-card" style="background-image: url('assets/jpgs/t2.jpg');">
-        <div class="image-overlay">
-          <h3>ליווי עד הרכב הנכון</h3>
-          <p>נהיה אתכם עד הרגע שתמצאו את מה שתם מחפשים</p>
-        </div>
-      </div>
-    </div>
-  </center>
 </div>
 
-<script> //slide in function!
+
+<script> 
+
+//slide in function!
   document.addEventListener("DOMContentLoaded", function () {
     const navbar = document.querySelector('.navbar');
     if (navbar) {
@@ -199,8 +135,50 @@
       }, 200); // delay just to feel smooth
     }
   });
-</script>
 
+  //import car data from mongo to cards in html code.
+
+  async function getCarsData() {
+    try {
+
+        const res = await fetch('/api/forsale'); //get data from api json imported from mongo
+        const cardata = await res.json(); //get the json itself as data
+
+        const container = document.getElementById('carsContainer'); //define id to get data to html
+        container.innerHTML = ''; //if cards are present, clear them out or delete them before import.
+
+        //navigate data to bootstrap cards
+        //for each listing in the json data file, create a card.
+
+        cardata.forEach(car => {
+            const cardHTML = `
+                <div class="col">
+                    <div class="card car-card h-100" dir="rtl">
+                        <img src="${car.image}" class="card-img-top mx-auto" alt="${car.make} ${car.model}">
+                        <div class="card-body">
+                            <h5 class="card-title text-center">${car.make} ${car.model}</h5>
+                            <ul class="card-details">
+                                <li>שנה: ${car.year}</li>
+                                <li>ק"מ: ${car.km?.toLocaleString() ?? 'לא זמין'}</li>
+                            </ul>
+                            <a href="#" class="btn btn-primary w-100">ראה עוד פרטים</a>
+                        </div>
+                    </div>
+                </div>
+            `;
+            container.insertAdjacentHTML('beforeend', cardHTML); //insert one by one
+        });
+
+    } catch (error) {
+        console.error('Error fetching car data:', error);
+    }
+}
+
+//execute function to implement data
+
+getCarsData()
+
+</script>
 </body>
 
 </html>

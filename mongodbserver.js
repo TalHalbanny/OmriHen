@@ -2,6 +2,9 @@ const express = require('express');
 const path = require('path');
 const bodyParser = require('body-parser');
 const mongodb = require('mongodb');
+const cors = require('cors');
+
+
 
 const port = 3000; 
 const app = express();
@@ -12,29 +15,30 @@ const dblink = 'mongodb://localhost:27017';
 
 const mongoclient = new mongodb.MongoClient(dblink);
 
-async function connectToMongoDB(){
+
+app.use(cors());
+
+
+app.use(cors());
+app.use(express.static(path.join(__dirname))); // server for the directory of OmriHen Folder only.
+
+
+//API For JSON Retrival from Mongo Collection.
+
+app.get('/api/forsale', async (req, res) => {
     try {
         await mongoclient.connect();
-        console.log("Connected to Mongo Server Successfully")
-        const db = mongoclient.db(dbname);
-        const collection = db.collection(collname);
-
-        //after connection get data from collection JSON to array.
-
+        const db = mongoclient.db(dbname); //define database
+        const collection = db.collection(collname); //define collection within database 
+        
         const collectiondata = await collection.find().toArray();
-       
-        collectiondata.forEach(doc => {
-            console.log("Model:" + " " + doc.model + " " + "|" + " " + "Make:" + " " + doc.make + " " + "|" + " " + "Millage:" + " " + doc.km + " " + "|" + " " + "Year:" + " " + doc.year);
-        });
-
-    } catch (err) {
-        console.error("Error in Establishing Connection to MongoDB");   
-        }
-}
-    
-connectToMongoDB();
-
-
+        res.json(collectiondata);
+    }
+    catch (err) {
+        console.error("Error Fetching Data:" + err);
+        res.status(500).json({ error: "Internal Server Error"})
+    }
+});
 
 
 

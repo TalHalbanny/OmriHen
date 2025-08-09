@@ -200,7 +200,16 @@
 }
 
 .topimg {
-  width:600px;
-  height: 400px;
+  width:800px;
+  height: 220px;
 }
 
+.card-img-top {
+  width: 210px;
+  height:210px;
+}
+
+.container-fluid { 
+  padding: 0;
+  margin: 0;
+}
